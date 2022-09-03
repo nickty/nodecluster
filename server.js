@@ -14,6 +14,7 @@ if (cluster.isMaster) {
   }
   cluster.on('online', (worker) => {
     console.log('worker id', worker.id);
+    console.log('worker process id', worker.process.pid);
   });
   cluster.on('exit', (worker) => {
     console.log(worker.id);
@@ -22,6 +23,7 @@ if (cluster.isMaster) {
 } else {
   app.get('/', (request, response) => {
     console.log(`Who accepted request, ${cluster.worker.process.pid}`);
+    console.log(`Who accepted request, ${cluster.worker.id}`);
     let number = fabObj.calculateFibonacciValue(
       Number.parseInt(request.query.number)
     );
